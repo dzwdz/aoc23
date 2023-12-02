@@ -9,7 +9,26 @@ def isSubset(a, b):
 				return False
 	return True
 
+def union(sets):
+	res = dict()
+	for s in sets:
+		for k,v in s.items():
+			if k not in res:
+				res[k] = v
+			else:
+				res[k] = max(res[k], v)
+	return res
+
+def power(d):
+	p = 1
+	for k in ['red', 'green', 'blue']:
+		if k not in d:
+			return 0
+		p *= d[k]
+	return p
+
 tally1 = 0
+tally2 = 0
 
 for line in lines:
 	gid, line = line[5:].split(':')
@@ -29,4 +48,7 @@ for line in lines:
 			possible = False
 	if possible:
 		tally1 += gid
+
+	tally2 += power(union(rounds))
 print(tally1)
+print(tally2)
