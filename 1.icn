@@ -1,0 +1,30 @@
+procedure toDigit(s, i)
+	digs := ["one","two","three","four","five","six","seven","eight","nine"]
+	if find(digs[j := (1 to 9)], s) == i then return j
+	return s[i]
+end
+
+procedure getDigits(line, digs)
+	a := 1000000
+	b := 0
+	every i := find(!digs, line) do {
+		a := a > i
+		b := b < i
+	}
+	return toDigit(line, a) || toDigit(line, b)
+end
+
+procedure solve(digs)
+	tally := 0
+	seek(&input, 1)
+	while line := read() do {
+		tally +:= getDigits(line, digs)
+	}
+	write(tally)
+end
+
+procedure main(args)
+	digs := ["one","two","three","four","five","six","seven","eight","nine"]
+	every digs |||:= [!&digits]
+	solve(&digits | digs)
+end
