@@ -1,0 +1,42 @@
+procedure issymbol(c)
+	return not find(c, &digits || ".")
+end
+
+procedure main()
+	local lines, tally1, tally2, neighs, prods, x, a, b, n, sx, sy, k
+
+	lines := list()
+	while put(lines, !&input)
+
+	tally1 := 0
+
+	tally2 := 0
+	neighs := table(0)
+	prods  := table(1)
+
+	every x := (1 to *lines) do {
+		lines[x] ? while tab(upto(&digits)) do {
+			a := &pos-1
+			b := many(&digits)
+			n := tab(b)
+
+			# part 1
+			if issymbol(lines[x-1 to x+1][a to b]) then
+				tally1 +:= n
+
+			# part 2
+			every issymbol(lines[sx := (x-1 to x+1)][sy := (a to b)]) do {
+				# record types don't seem to work well as table keys,
+				# so i'm using a string as a poor man's tuple
+				k := sx || "x" || sy 
+				neighs[k] +:= 1
+				prods[k]  *:= n
+			}
+		}
+	}
+
+	every neighs[k := key(neighs)] == 2 do tally2 +:= prods[k]
+
+	write(tally1)
+	write(tally2)
+end
