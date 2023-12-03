@@ -1,0 +1,40 @@
+procedure split(delim)
+	local a
+	every tab(&pos | upto(delim)) do {
+		move(1)
+		a := upto(delim) | 0
+		suspend tab(a)
+	}
+end
+
+procedure main()
+	local line, gid, s, amt, color, colors, tally1, tally2, power
+	tally1 := 0
+	tally2 := 0
+	while line := read() do line ? {
+		tab(upto(&digits))
+		gid := tab(upto(":"))
+		colors := table(0)
+		#write(line)
+		every s := split(";") do s ? {
+			#write(s)
+			every s := split(",") do s?{
+				tab(upto(&digits))
+				amt := tab(many(&digits))
+				move(1) # skip space
+				color := tab(0)
+				colors[color] <:= amt
+			}
+		}
+		#every write(colors["red" | "green" | "blue"])
+		if colors["red"] <= 12 then
+		if colors["green"] <= 13 then
+		if colors["blue"] <= 14 then # :(
+			tally1 +:= gid
+
+		power := 1
+		every power *:= !colors
+		tally2 +:= power
+	}
+	every write(tally1 | tally2)
+end
