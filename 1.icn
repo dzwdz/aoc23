@@ -1,10 +1,12 @@
 procedure toDigit(s, i)
+	local digs, j
 	digs := ["one","two","three","four","five","six","seven","eight","nine"]
 	if find(digs[j := (1 to 9)], s) == i then return j
 	return s[i]
 end
 
 procedure getDigits(line, digs)
+	local a, b, i
 	a := 1000000
 	b := 0
 	every i := find(!digs, line) do {
@@ -15,6 +17,7 @@ procedure getDigits(line, digs)
 end
 
 procedure solve(digs)
+	local tally, line
 	tally := 0
 	seek(&input, 1)
 	while line := read() do {
@@ -24,6 +27,7 @@ procedure solve(digs)
 end
 
 procedure main(args)
+	local digs
 	digs := ["one","two","three","four","five","six","seven","eight","nine"]
 	every digs |||:= [!&digits]
 	solve(&digits | digs)
