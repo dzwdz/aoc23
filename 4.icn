@@ -1,0 +1,43 @@
+procedure split(delim)
+	local s
+	if not many(delim) then {
+		s := tab(upto(delim) | 0)
+		if *s ~= 0 then suspend s
+	}
+	while tab(many(delim)) do {
+		s := tab(upto(delim) | 0)
+		if *s ~= 0 then suspend s
+	}
+end
+
+procedure main()
+	local tally1, tally2, counts, lines, i, wins_s, mine_s, wins, mine, points
+
+	tally1 := 0
+	tally2 := 0
+	counts := table(1)
+
+	lines := list()
+	while put(lines, !&input)
+
+	every i := (1 to *lines) do lines[i] ? {
+		tab(upto(":")+2) # skip the game id
+		wins_s := tab(upto("|"))
+		move(1)
+		mine_s := tab(0)
+
+		wins := list()
+		wins_s ? every put(wins, split(' '))
+		mine := list()
+		mine_s ? every put(mine, split(' '))
+
+		points := 0
+		every !wins == !mine do points +:= 1
+		tally1 +:= 2 ^ (points-1)
+
+		every counts[(i+1 to i+points)] +:= counts[i]
+		tally2 +:= counts[i]
+	}
+	write(tally1)
+	write(tally2)
+end
