@@ -38,3 +38,9 @@ tally1 = 1
 for race in races:
 	tally1 *= count(*race)
 print(tally1)
+
+race = [
+	int(''.join([c for c in line.split(maxsplit=1)[1] if c.isdigit()]))
+	for line in lines
+]
+print(count(*race))
